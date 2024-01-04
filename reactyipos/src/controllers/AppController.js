@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from '../components/Home';
 import SignInController from './SignInController';
+import '../assets/css/app.css';
 
 const AppController = () => {
   const [user] = useState(null);
 
   return (
     <Router>
-      <div>
+      <div className='container'>
         <Routes>
             <Route 
                 path="/"
