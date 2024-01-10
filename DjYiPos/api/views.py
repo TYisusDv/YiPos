@@ -5,19 +5,19 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login
 from rest_framework.permissions import AllowAny
 
-class LoginAPIView(APIView):
+class SignInAPIView(APIView):
     permission_classes = [AllowAny]
   
     def post(self, request):
-        email = request.data.get('email')
+        username = request.data.get('username')
         password = request.data.get('password')              
 
-        if not email:
+        if not username:
             return Response({'success': False, 'msg': 'Por favor, proporcione un correo electrónico válido.'}, status = 400)
         elif not password:
             return Response({'success': False, 'msg': 'Por favor, proporcione una contraseña válida.'}, status = 400)
         
-        user = authenticate(request, username = email, password = password)
+        user = authenticate(request, username = username, password = password)
         if user is not None:
             login(request, user)
             
