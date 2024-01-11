@@ -38,7 +38,7 @@ const SignIn = () => {
   return (
     <div className="card">
       <div className="info-1">
-        <div className="img"></div>
+        <img src={require('../../assets/img/logo-white.png')} alt="YiPos"/>
         <div className="information">
           <h1>¡Bienvenido/a de nuevo!</h1>
           <p>Para mantenerte conectado al sistema, por favor, inicia sesión.</p>

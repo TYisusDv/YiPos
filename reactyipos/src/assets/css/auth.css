@@ -83,10 +83,9 @@
     box-sizing: border-box;
 }
 
-.content .card .info-1 .img {
-    height: 70px;
-    background-image: url('../img/logo.svg');
-    background-repeat: no-repeat;
+.content .card .info-1 img {
+    height: auto;
+    width: 7em;
 }
 
 .content .card .info-1 .information {
@@ -102,15 +101,15 @@
 
 .content .card .info-1 .information h1 {
     margin-top: -50px;
-    font-size: 36px;
+    font-size: 2.3em;
     font-weight: bold;
     color: white;
 }
 
 .content .card .info-1 .information p {
     text-align: center;
-    font-size: 22px;
-    padding: 18px 0px 40px 0px;
+    font-size: 1.2em;
+    padding: 0.8em 0px 1.5em 0px;
     color: white;
 }
 
@@ -129,19 +128,19 @@
 .content .card .info-2 .form {
     height: 100%;
     width: 100%;
-    padding-top: 60px;
     max-height: 650px;
     max-width: 600px;
+    padding-top: 5em;
 }
 
 .content .card .info-2 .form h1 {
-    font-size: 40px;
+    font-size: 2em;
     text-align: center;
 }
 
 .content .card .info-2 .form p {
     padding: 5px 0px 40px 0px;
-    font-size: 16px;
+    font-size: 1em;
     font-weight: bold;
     color: var(--text-grey);
     text-align: center;
@@ -154,19 +153,19 @@
     width: 100%;
     background: var(--input);
     border-radius: 10px;
-    padding-left: 14px;
+    padding: 0px 14px 0px 14px;
     box-sizing: border-box;
 }
 
 .form-input svg {
     color: var(--text-grey);
-    font-size: 18px;
+    font-size: 1em;
 }
 
 .form-input input {
-    width: 80%;
-    font-size: 18px;
-    padding: 20px 14px 20px 14px;
+    width: 100%;
+    font-size: 1em;
+    padding: 1em 0 1em 1em;
     background: transparent;
     border: none;
     border-radius: 10px;
@@ -177,9 +176,9 @@
 }
 
 .btn {
-    padding: 18px;
+    padding: 0.9em;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1em;
     font-weight: bold;
     color: white;
     border: none;

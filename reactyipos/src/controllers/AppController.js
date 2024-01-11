@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Home from "../components/Home";
+import HomeController from "./HomeController";
 import SignInController from './SignInController';
+import "../assets/css/app.css";
 
 const AppController = () => {
   const [user, setUser] = useState(null);
@@ -53,7 +54,7 @@ const AppController = () => {
         <Routes>
           <Route
             path="/"
-            element={user ? <Home /> : <Navigate to="/auth/sign-in" />}
+            element={user ? <HomeController /> : <Navigate to="/auth/sign-in" />}
           />
           <Route
             path="/auth/*"
