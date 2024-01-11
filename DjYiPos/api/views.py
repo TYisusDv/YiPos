@@ -2,8 +2,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from django.contrib.auth import authenticate, login
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
+from rest_framework.exceptions import AuthenticationFailed
+from django.contrib.auth import authenticate, login
+from django.utils import timezone
+import datetime
 
 class SignInAPIView(APIView):
     permission_classes = [AllowAny]
@@ -21,7 +26,27 @@ class SignInAPIView(APIView):
         if user is not None:
             login(request, user)
             
-            token, created = Token.objects.get_or_create(user = user)
+            token, created = Token.objects.get_or_create(user=user)
+            if not created and token.created < timezone.now() - datetime.timedelta(days=1):
+                token.delete()
+                token = Token.objects.create(user = user)
+                
             return Response({'success': True, 'token': token.key})
         else:
             return Response({'success': False, 'msg': 'Credenciales inválidas'}, status = 401)
+        
+class UserInfoAPIView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        try:
+            user = request.user
+            user_info = {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+            }
+            return Response({'success': True, 'user': user_info})
+        except AuthenticationFailed:
+            return Response({'success': False, 'msg': 'Usuario no autenticado'}, status = 401)
