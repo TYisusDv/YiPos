@@ -3,7 +3,7 @@ import React, { useState }  from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser, faSignIn, faLock } from "@fortawesome/free-solid-svg-icons";
 
-const SignIn = () => {
+const SignIn = ({styles}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -36,21 +36,23 @@ const SignIn = () => {
   };
 
   return (
-    <div className="card">
-      <div className="info-1">
-        <img src={require('../../assets/img/logo-white.png')} alt="YiPos"/>
-        <div className="information">
+    <div className={styles.card}>
+      <div className={styles["info-1"]}>
+        <div className={styles.logo}>
+          <img src={require('../../assets/img/logo-white.png')} alt="YiPos"/>
+        </div>
+        <div className={styles.information}>
           <h1>¡Bienvenido/a de nuevo!</h1>
           <p>Para mantenerte conectado al sistema, por favor, inicia sesión.</p>
-          <a href="https://google.com" className="btn btn-r-transparent">Registrarse</a>
+          <a href="https://google.com" className={`${styles.btn} ${styles['btn-r-transparent']}`}>Registrarse</a>
         </div>
       </div>
-      <div className="info-2">
-        <div className="form">
+      <div className={styles["info-2"]}>
+        <div className={styles.form}>
           <form onSubmit={handleSubmit}>
-            <h1 className="text-primary">Inicio de sesión</h1>
+            <h1 className={styles["text-primary"]}>Inicio de sesión</h1>
             <p>Usa tu usuario y contraseña para acceder.</p>
-            <div className="form-input mb-6px">
+            <div className={`${styles['form-input']} ${styles['mb-6px']}`}>
               <FontAwesomeIcon icon={faUser}/>
               <input 
                 type="text" 
@@ -59,7 +61,7 @@ const SignIn = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
-            <div className="form-input mb-16px">
+            <div className={`${styles['form-input']} ${styles['mb-16px']}`}>
               <FontAwesomeIcon icon={faLock}/>
               <input 
                 type="password"
@@ -68,7 +70,7 @@ const SignIn = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button type="submit" className="btn btn-primary w-100"><span><FontAwesomeIcon icon={faSignIn} className="mr-2px"/> Iniciar sesión</span></button>
+            <button type="submit" className={`${styles.btn} ${styles['btn-primary']} ${styles['w-100']}`}><span><FontAwesomeIcon icon={faSignIn} className={styles["mr-2px"]}/> Iniciar sesión</span></button>
           </form>
         </div>
       </div>
