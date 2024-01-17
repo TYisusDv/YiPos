@@ -53,13 +53,13 @@ const AppController = () => {
       <div className="container">
         <Routes>
           <Route
-            path="/"
-            element={user ? <HomeController /> : <Navigate to="/auth/sign-in" />}
-          />
-          <Route
             path="/auth/*"
             element={user ? <Navigate to="/" /> : <SignInController />}
           />
+          <Route
+            path="/*"
+            element={user ? <HomeController /> : <Navigate to="/auth/sign-in" />}
+          />         
         </Routes>
       </div>
     </Router>

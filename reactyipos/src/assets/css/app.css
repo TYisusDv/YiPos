@@ -1,19 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round');
 
 :root{
     --bg: #eef4f3;
-    --primary: #3dad9f;
-    --primary-hover: #4ec0b3;
+    --primary: #4ec0b3;
+    --primary-hover: #3dad9f;
     --primary-rgb: 61, 174, 160;
-    --dark: #252526;
+    --dark: #2d2d30;
+    --dark-1: #1e1e1e;
+    --dark-rgb: 45, 45, 47;
     --input: #f5f8f6;  
     --text-grey: #9d9e9f;
+    --header-height: 4em;
+    --navbar-width: 17em;
 }
 
 * {
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Varela Round', 'Roboto', 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+}
+
+body {
+    font-size: 15px;
 }
 
 .container {
