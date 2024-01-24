@@ -92,10 +92,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'yipos',
-        'USER': 'root',
+        'USER': 'yipos',
         'PASSWORD': 'Jesus@123',        
-        'HOST': 'localhost',
-        'PORT': 3006,        
+        'HOST': 'yipos-db-1',
+        'PORT': 3306,        
         'OPTIONS': {
             'ssl': False,
         },

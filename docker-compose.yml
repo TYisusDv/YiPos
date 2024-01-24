@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+
+  db:
+    image: mysql:8.3
+    environment:
+      MYSQL_DATABASE: 'yipos'
+      MYSQL_USER: 'yipos'
+      MYSQL_PASSWORD: 'Jesus@123'
+      MYSQL_ROOT_PASSWORD: 'Jesus@123'
+    ports:
+      - "3306:3306"
+    volumes:
+      - yipos_data:/var/lib/mysql
+      
+volumes:
+  yipos_data:
