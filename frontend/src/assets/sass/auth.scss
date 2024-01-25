@@ -81,9 +81,9 @@
                 }
 
                 p {
-                    padding: 5px 0px 40px 0px;
+                    margin-bottom: 2em;
                     font-size: 1em;
-                    font-weight: bold;
+                    font-weight: 600;
                     color: $text-grey; 
                     text-align: center;
                 }
@@ -172,9 +172,10 @@
 }
 
 .alert {
-    padding: 1em;
+    padding: 1.1em;
     border-radius: 10px;
     margin-bottom: 2.2em;
+    box-sizing: border-box;
 
     &.danger {
         background-color: $danger;

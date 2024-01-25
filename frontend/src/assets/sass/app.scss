@@ -1,5 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round');
+
+@font-face {
+    font-family: 'SFProDisplay';
+    src: url('../fonts/SF-Pro-Display-Regular.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'SFProDisplay';
+    src: url('../fonts/SF-Pro-Display-Bold.otf') format('opentype');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'SFProDisplay';
+    src: url('../fonts/SF-Pro-Display-Semibold.otf') format('opentype');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'SFProDisplay';
+    src: url('../fonts/SF-Pro-Display-Light.otf') format('opentype');
+    font-weight: 300;
+}
 
 $bg: #eef4f3;
 $primary: #4ec0b3;
@@ -13,7 +35,7 @@ $header-height: 4em;
 $navbar-width: 17em;
 
 * {
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'SFProDisplay', 'Roboto', 'Arial', sans-serif;
     margin: 0;
     padding: 0;
 }
