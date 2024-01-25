@@ -1,0 +1,186 @@
+@import 'app';
+
+/* CONTENT */
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    /* HEADER */
+    .header {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5em;
+        gap: 0.4em;
+        width: 100%;
+        height: $header-height;
+        background: $primary;  
+        z-index: 2;
+        box-sizing: border-box;
+
+        .logo {
+            width: 4em;
+            height: 100%;
+            padding-left: 1em;
+
+            .img {
+                width: 100%;
+                height: 100%;
+                background-image: url('../img/logo-white.svg');
+                background-repeat: no-repeat;
+            }
+        }
+
+        /* USER */
+        .user {
+            cursor: pointer;
+            height: 100%;
+            padding: 0.5em 0.5em 0.5em 1em;
+            margin-right: 0.7em;
+            border-radius: 8px;
+            box-sizing: border-box;
+
+            /* HOVER */
+            &:hover {
+                background: $dark;
+                box-shadow: 0px 0px 10px 1px rgba($dark, 0.6);
+            }
+
+            .info {
+                display: flex;
+                align-items: center;
+                gap: 0.5em;
+
+                .name {
+                    font-size: 0.95em;
+                    font-weight: bold;
+                    color: white;
+                }
+
+                .img {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 100%;
+                    background-color: white;
+                    padding: 0.5em;
+                    box-sizing: border-box;
+
+                    svg {
+                        color: $primary;
+                        font-size: 1em;
+                    }
+
+                    /* HOVER */
+                    &:hover {
+                        svg {
+                            color: $dark;
+                        }
+                    }
+                }
+            }
+        }
+        /* END USER */
+    }
+    /* END HEADER */
+
+    /* MAIN CONTENT */
+    .main-content {
+        display: flex;
+        width: 100%;
+        height: 100%;
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            width: $navbar-width;
+            height: 100%;
+            background: $dark-1;
+            padding-top: $header-height;
+            z-index: 1;
+
+            ul {
+                padding: 1em;
+                list-style: none;
+
+                li.separator {
+                    margin-top: 10px;
+                    padding: 0.7em 0.8em 0.2em 0.5em;
+                    color: white;
+                    font-size: 0.7em;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+
+                li a {
+                    display: flex;
+                    align-items: baseline;
+                    gap: 0.7em;
+                    width: 100%;
+                    padding: 0.7em 0.8em 0.6em 0.8em;
+                    text-decoration: none;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 1em;
+                    border-radius: 8px;
+                    box-sizing: border-box;
+
+                    /* HOVER */
+                    &:hover {
+                        background: $primary;
+                    }
+                }
+            }
+        }
+        /* END NAVBAR */
+
+        /* MAIN */
+        .main {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            z-index: 0;
+
+            /* VIEW */
+            .view {
+                height: 100%;
+                padding: calc($header-height + 1em) 1.5em 1em calc($navbar-width + 1.5em);
+                background: $bg;
+                overflow-x: auto;
+                transition: padding-left 400ms ease;
+
+                /* END VIEW */
+            }
+
+            /* FOOTER */
+            .footer {
+                display: flex;
+                align-items: center;
+                height: $header-height;
+                background: $dark;
+                padding-left: calc($navbar-width + 1.5em);
+                box-sizing: border-box;
+
+                p {
+                    font-size: 0.85em;
+                    color: white;
+                    font-weight: bold;
+                }
+                /* END FOOTER */
+            }
+        }
+        /* END MAIN */
+    }
+    /* END MAIN CONTENT */
+
+    @media only screen and (max-width: 1200px) {
+        /* VIEW */
+        .main-content .main .view {
+            padding-left: 1.5em;
+        }
+        /* END VIEW */
+    }
+}

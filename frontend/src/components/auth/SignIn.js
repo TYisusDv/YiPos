@@ -50,6 +50,12 @@ const SignIn = ({styles}) => {
       <div className={styles["info-2"]}>
         <div className={styles.form}>
           <form onSubmit={handleSubmit}>
+            <div>
+                <div className={`${styles.alert} ${styles.danger}`}>
+                  <div className={styles.title}><span>Exito!</span> Test.</div>
+                  <div className={styles.body}>Prueba</div>
+                </div>
+            </div>
             <h1 className={styles["text-primary"]}>Inicio de sesión</h1>
             <p>Usa tu usuario y contraseña para acceder.</p>
             <div className={`${styles['form-input']} ${styles['mb-6px']}`}>

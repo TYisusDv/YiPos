@@ -8,12 +8,17 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    volumes:
+      - ./backend:/app
 
   frontend:
     build:
       context: ./frontend
     ports:
       - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    #command: sh -c "npm install && npm start"
 
   db:
     image: mysql:8.3

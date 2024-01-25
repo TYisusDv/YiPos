@@ -12,14 +12,15 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.6.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
     "react-scripts": "^5.0.1",
+    "sass": "^1.70.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "build-css": "sass --style compressed --no-source-map src/assets/sass/app.scss:src/assets/css/app.css src/assets/sass/auth.scss:src/assets/css/auth.module.css src/assets/sass/home.scss:src/assets/css/home.module.css",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

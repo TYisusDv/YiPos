@@ -8,4 +8,6 @@ RUN npm install
 
 COPY . .
 
+RUN npm run build-css
+
 CMD ["npm", "start"]

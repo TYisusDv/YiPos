@@ -4,7 +4,7 @@ import React from "react";
 const ManageUsers = ({ styles }) => {
   return (
     <div>
-      <h2>Manage users</h2>      
+      <h2>Administrar usuarios</h2>      
     </div>
   );
 };
