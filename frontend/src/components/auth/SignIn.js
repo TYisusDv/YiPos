@@ -1,7 +1,8 @@
 // components/Home.js
 import React, { useState }  from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUser, faSignIn, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faSignIn, faLock, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { userModelAuth } from '../../models/userModel'; 
 
 const SignIn = ({styles}) => {
   const [username, setUsername] = useState("");
@@ -10,29 +11,15 @@ const SignIn = ({styles}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/auth/sign-in", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        
-        const expirationDate = new Date();
-        expirationDate.setHours(expirationDate.getHours() + 1);
-        document.cookie = `authToken=${responseData.token}; path=/; expires=${expirationDate.toUTCString()}; SameSite=Strict`;
-
-        window.location = '/';
-      } else {
-        console.error("Error en el inicio de sesión");
-      }
-    } catch (error) {
-      console.error("Error de red:", error);
+    const response = await userModelAuth(username, password);
+    if (response.success) {
+      console.log(response.msg);
+      window.location = '/';
+      return;
     }
+
+    console.log(response.msg);
+    return;
   };
 
   return (
@@ -52,7 +39,7 @@ const SignIn = ({styles}) => {
           <form onSubmit={handleSubmit}>
             <div>
                 <div className={`${styles.alert} ${styles.danger}`}>
-                  <div className={styles.title}><span>Exito!</span> Test.</div>
+                  <div className={styles.title}><span>Exito!</span> Test. <FontAwesomeIcon className={styles['btn-close']} icon={faTimes}/></div>
                   <div className={styles.body}>Prueba</div>
                 </div>
             </div>

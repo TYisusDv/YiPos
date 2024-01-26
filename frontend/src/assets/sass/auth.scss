@@ -172,7 +172,7 @@
 }
 
 .alert {
-    padding: 1.1em;
+    padding: 1.5em 1.3em 1.5em 1.3em;
     border-radius: 10px;
     margin-bottom: 2.2em;
     box-sizing: border-box;
@@ -188,6 +188,15 @@
         span{
             font-weight: bold;
         }
+
+        .btn-close {
+            float: right;
+            cursor: pointer;
+
+            &:hover {
+                color: #e6e6e6;
+            }
+        }
     }
 
     .body {
@@ -195,7 +204,7 @@
     }
 }
 
-@media only screen and (max-width: 1200px) {
+@media (max-width: 1200px) {
     .content {
         align-items: normal;
         padding-top: 2em;
