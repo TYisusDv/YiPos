@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "animate.css": "^4.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
@@ -22,7 +23,7 @@
   "scripts": {
     "build-css": "sass --style compressed --no-source-map src/assets/scss:src/assets/css",
     "watch-css": "sass --watch --style compressed --no-source-map src/assets/scss:src/assets/css",
-    "start": "react-scripts start",   
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
