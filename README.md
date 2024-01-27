@@ -8,4 +8,3 @@ Este software se está desarrollando para aprender y practicar en un nuevo lengu
 - Django (API Rest)
 - React
 - MySQL
-- Docker

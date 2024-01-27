@@ -1,4 +1,4 @@
-@import 'app';
+@import 'app.module';
 
 .content {
     width: 100%;
@@ -118,6 +118,10 @@
         &:focus {
             outline: none;
         }
+
+        &[type='password']{
+            font-family: 'Roboto', 'Arial', sans-serif;
+        }
     }
 }
 
@@ -136,6 +140,15 @@
     &:hover {
         color: white;
         background: #1766ab;
+    }
+
+    &:disabled {
+        cursor: default;
+        background: $primary-disabled;
+
+        &:hover {
+            background: $primary-disabled;
+        }
     }
 
     &-primary {
@@ -176,11 +189,27 @@
     border-radius: 10px;
     margin-bottom: 2.2em;
     box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 500ms ease;
+
+    &.show {
+        opacity: 1;
+    }
+
+    &.hide {
+        opacity: 0;
+        pointer-events: none;
+    }
 
     &.danger {
         background-color: $danger;
         color: white;
-    }
+    } 
+    
+    &.primary {
+        background-color: $primary;
+        color: white;
+    } 
 
     .title {
         font-size: 1.2em;
@@ -192,10 +221,7 @@
         .btn-close {
             float: right;
             cursor: pointer;
-
-            &:hover {
-                color: #e6e6e6;
-            }
+            color: #ffffff;
         }
     }
 

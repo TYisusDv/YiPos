@@ -18,7 +18,7 @@ class SignInAPIView(APIView):
         password = request.data.get('password')              
 
         if not username:
-            return Response({'success': False, 'msg': 'Por favor, proporcione un correo electrónico válido.'}, status = 400)
+            return Response({'success': False, 'msg': 'Por favor, proporcione un usuario válido.'}, status = 400)
         elif not password:
             return Response({'success': False, 'msg': 'Por favor, proporcione una contraseña válida.'}, status = 400)
         
@@ -31,9 +31,9 @@ class SignInAPIView(APIView):
                 token.delete()
                 token = Token.objects.create(user = user)
                 
-            return Response({'success': True, 'token': token.key})
+            return Response({'success': True, 'msg': 'Redireccionando...', 'token': token.key})
         else:
-            return Response({'success': False, 'msg': 'Credenciales inválidas'}, status = 401)
+            return Response({'success': False, 'msg': 'Usuario o contraseña incorrecta.'}, status = 401)
         
 class UserInfoAPIView(APIView):
     authentication_classes = [TokenAuthentication]

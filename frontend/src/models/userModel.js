@@ -2,7 +2,6 @@
 export const userModelCheck = async () => {
   try {
     const authToken = document.cookie.replace(/(?:(?:^|.*;\s*)authToken\s*=\s*([^;]*).*$)|^.*$/, "$1");
-    let dataUser = null;
 
     if (authToken) {
       const response = await fetch("http://127.0.0.1:8000/api/user/info", {
@@ -13,14 +12,22 @@ export const userModelCheck = async () => {
         },
       });
 
-      if (response.ok) {
-        dataUser = await response.json();
-        return {
-          "success": true,
-          "msg": "Exit",
-          "dataUser": dataUser,
-        };
-      }       
+      const responseJson = await response.json();
+
+      if (response.ok) {  
+        if(responseJson.success){     
+          return {
+            "success": true,
+            "msg": responseJson.msg,
+            "user": responseJson.user
+          };
+        }
+      } 
+      
+      return {
+        "success": false,
+        "msg": responseJson.msg,
+      };  
     }
 
     return {
@@ -45,22 +52,24 @@ export const userModelAuth = async (username, password) => {
       body: JSON.stringify({ username, password }),
     });
 
-    if (response.ok) {
-      const responseData = await response.json();
-      
-      const expirationDate = new Date();
-      expirationDate.setHours(expirationDate.getHours() + 1);
-      document.cookie = `authToken=${responseData.token}; path=/; expires=${expirationDate.toUTCString()}; SameSite=Strict`;
+    const responseJson = await response.json();
 
-      return {
-        "success": true,
-        "msg": "Error",
-      };
+    if (response.ok) {
+      if(responseJson.success){
+        const expirationDate = new Date();
+        expirationDate.setHours(expirationDate.getHours() + 1);
+        document.cookie = `authToken=${responseJson.token}; path=/; expires=${expirationDate.toUTCString()}; SameSite=Strict`;
+  
+        return {
+          "success": true,
+          "msg": responseJson.msg,
+        };
+      }    
     }
 
     return {
       "success": false,
-      "msg": "Error",
+      "msg": responseJson.msg,
     };  
   } catch (error) {
     return {

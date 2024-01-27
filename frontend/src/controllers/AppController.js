@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-do
 import HomeController from "./HomeController";
 import SignInController from './SignInController';
 import { userModelCheck } from '../models/userModel'; 
-import "../assets/css/app.css";
+import styles from "../assets/css/app.module.css";
 
 const AppController = () => {
   const [user, setUser] = useState(null);
@@ -14,7 +14,7 @@ const AppController = () => {
     const fetchData = async () => {
       const response = await userModelCheck();
       if (response.success) {
-        setUser(response.dataUser);
+        setUser(response.user);
       } else {
         setUser(null);
       }
@@ -30,7 +30,7 @@ const AppController = () => {
 
   return (
     <Router>
-      <div className="container">
+      <div className={styles.container}>
         <Routes>
           <Route
             path="/auth/*"
