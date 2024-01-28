@@ -39,6 +39,7 @@ $navbar-width: 17em;
     font-family: 'SFProDisplay', 'Roboto', 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    user-select: none;
 }
 
 body {
@@ -123,14 +124,48 @@ body {
     }
 }
 
+.form-input {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: $input; 
+    border-radius: 10px;
+    padding: 0px 14px 0px 14px;
+    box-sizing: border-box;
+
+    svg {
+        color: $grey; 
+        font-size: 1em;
+    }
+
+    input {
+        width: 100%;
+        font-size: 1em;
+        padding: 1em 0 1em 1em;
+        background: transparent;
+        border: none;
+        border-radius: 10px;
+
+        &:focus {
+            outline: none;
+        }
+
+        &[type='password']{
+            font-family: 'Roboto', 'Arial', sans-serif;
+        }
+    }
+}
+
 .btn {
     padding: 0.7em 1em 0.7em 1em;
     background: white;
+    border: none;
     border-radius: 8px;
     font-size: 0.9em;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 0 6px rgba($dark, 0.4);
+    //box-shadow: 0 0 6px rgba($dark, 0.3);
     box-sizing: border-box;
 
     &.btn-sm {
@@ -197,6 +232,16 @@ body {
         background: $primary;
     }
 
+    &-primary-hover {
+        color: white;
+        background: $primary-hover;
+    }
+
+    &-primary-disabled {
+        color: white;
+        background: $primary-disabled;
+    }
+
     &-t-primary {
         color: $primary;
         background: rgba($primary, 0.2);
@@ -233,7 +278,9 @@ body {
 
     .head {
         display: flex;
+        align-items: center;
         justify-content: space-between;
+        margin-bottom: 20px;
 
         .title {
             color: $primary;

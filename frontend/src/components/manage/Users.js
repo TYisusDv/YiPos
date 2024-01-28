@@ -2,10 +2,19 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUsers, faPlus } from "@fortawesome/free-solid-svg-icons";
-import 'animate.css';
+import "animate.css";
 import styles from "../../assets/css/home.module.css";
+import DataTable from "../../scripts/DataTable";
 
 const ManageUsers = () => {
+  const columns = [
+    { field: "id", label: "User ID" },
+    { field: "username", label: "User Name" },
+    { field: "email", label: "Email Address" },
+    { field: "last_login", label: "Last Login" },
+    { field: "date_joined", label: "Join Date" },
+  ];
+
   return (
     <div>
       <div className={styles.header}>
@@ -55,9 +64,9 @@ const ManageUsers = () => {
             </div>
           </div>
         </div>
-        <div className={`${styles.row} ${styles['fd-column']} ${styles['g-8px']} ${styles['mt-16px']}`}>
+        <div className={`${styles.row} ${styles["fd-column"]} ${styles["g-8px"]} ${styles["mt-16px"]}`}>
           <div className={styles["col-12"]}>
-            <div className={`${styles['d-flex']} ${styles['g-8px']}`}>
+            <div className={`${styles["d-flex"]} ${styles["g-8px"]}`}>
             </div>
           </div>
           <div className={styles["col-12"]}>
@@ -65,10 +74,14 @@ const ManageUsers = () => {
               <div className={styles.head}>
                 <h3 className={styles.title}>Usuarios</h3>
                 <div>
-                  <btn className={`${styles['btn']} ${styles['bg-primary']}`}><FontAwesomeIcon icon={faPlus} /> Agregar</btn>
+                  <button className={`${styles["btn"]} ${styles["bg-primary"]}`}><FontAwesomeIcon icon={faPlus} /> Agregar</button>
                 </div>
               </div>
               <div className={styles.body}>
+                <DataTable 
+                  endpoint="manage/users"
+                  columns={columns}    
+                />
               </div>
             </div>
           </div>

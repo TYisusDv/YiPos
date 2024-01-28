@@ -1,9 +1,10 @@
 // scripts/AlertFormat.js
-import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import styles from "../assets/css/auth.module.css";
 
-const AlertFormat = ({ styles, setAlertMessage, type, title, message, autoHideTime}) => {
+const AlertFormat = ({ setAlertMessage, type, title, message, autoHideTime}) => {
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = () => {
@@ -31,7 +32,7 @@ const AlertFormat = ({ styles, setAlertMessage, type, title, message, autoHideTi
       <div className={styles.title}>
         <span>{title}</span> {message}
         <FontAwesomeIcon
-          className={styles['btn-close']}
+          className={styles["btn-close"]}
           icon={faTimes}
           onClick={handleClose}
         />

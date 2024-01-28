@@ -6,7 +6,7 @@ import ManageUsers from "../components/manage/Users";
 import styles from "../assets/css/home.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser, faUsers, faHome } from "@fortawesome/free-solid-svg-icons";
-import 'animate.css';
+import "animate.css";
 
 const HomeController = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -76,7 +76,7 @@ const HomeController = () => {
               <div className="animate__animated animate__fadeIn">
                 <div className={styles.header}>
                     <div>
-                      <h1>Cargando{Array(dots).fill('.').join('')}</h1>
+                      <h1>Cargando{Array(dots).fill(".").join("")}</h1>
                       <p>Por favor, espere.</p>
                     </div>
                     <ul>

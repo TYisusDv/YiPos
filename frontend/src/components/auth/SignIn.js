@@ -2,10 +2,11 @@
 import React, { useState }  from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser, faSignIn, faLock } from "@fortawesome/free-solid-svg-icons";
+import { AuthSignInModel } from "../../models/UserModel";
 import AlertFormat from "../../scripts/AlertFormat";
-import { userModelAuth } from "../../models/userModel";
+import styles from "../../assets/css/auth.module.css";
 
-const SignIn = ({styles}) => {
+const SignIn = () => {
   const [alertMessage, setAlertMessage] = useState(null);
   const [btnSubmitSpan, setBtnSubmitSpan] = useState(
     <span>
@@ -32,7 +33,7 @@ const SignIn = ({styles}) => {
       </span>
     )
     
-    const response = await userModelAuth(username, password);
+    const response = await AuthSignInModel(username, password);
 
     setTimeout(function(){      
       if (response.success) {
@@ -71,7 +72,6 @@ const SignIn = ({styles}) => {
           <form onSubmit={handleSubmit}>
             {alertMessage && (
               <AlertFormat
-                styles={styles}
                 setAlertMessage={setAlertMessage}
                 type={alertMessage.type}
                 title_strong={alertMessage.title_strong}

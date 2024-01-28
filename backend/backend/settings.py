@@ -57,6 +57,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
+    'EXCEPTION_HANDLER': 'api.custom_exception_handler.custom_exception_handler',
 }
 
 CORS_ALLOWED_ORIGINS = [
