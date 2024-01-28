@@ -5,11 +5,12 @@ import Home from "../components/Home";
 import ManageUsers from "../components/manage/Users";
 import styles from "../assets/css/home.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUser, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faUsers, faHome } from "@fortawesome/free-solid-svg-icons";
 import 'animate.css';
 
 const HomeController = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [dots, setDots] = useState(1);
 
   useEffect(() => {
     const preLoader = () => {
@@ -17,6 +18,14 @@ const HomeController = () => {
     };
 
     preLoader();
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setDots((prevDots) => (prevDots % 4) + 1);
+    }, 300); 
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const handlePreLoader = () => {
@@ -57,18 +66,34 @@ const HomeController = () => {
             </li>
             <li className={styles.separator}>Administración</li>
             <li>
-              <Link to="/manage/users" onClick={handlePreLoader}><FontAwesomeIcon icon={faHome}/> Usuarios</Link>
+              <Link to="/manage/users" onClick={handlePreLoader}><FontAwesomeIcon icon={faUsers}/> Usuarios</Link>
             </li>
           </ul>
         </div>
         <div className={styles.main}>
           <div className={styles.view}>
             {isLoading ? (
-              <div className="content-active animate__animated animate__fadeIn">Cargando...</div>
+              <div className="animate__animated animate__fadeIn">
+                <div className={styles.header}>
+                    <div>
+                      <h1>Cargando{Array(dots).fill('.').join('')}</h1>
+                      <p>Por favor, espere.</p>
+                    </div>
+                    <ul>
+                      <li>App</li>
+                      <li>/</li>
+                      <li className={styles.active}>Loading</li>
+                    </ul>
+                </div>
+                <div className={styles["row-main"]}>
+                  <p>Bienvenido a la página principal.</p>
+                  
+                </div>
+              </div>
             ) : (
               <Routes>
-                <Route path="/" element={<Home styles={styles} />} />
-                <Route path="/manage/users" element={<ManageUsers styles={styles} />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/manage/users" element={<ManageUsers />} />
               </Routes>
             )}
           </div>

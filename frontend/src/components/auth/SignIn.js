@@ -2,7 +2,7 @@
 import React, { useState }  from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser, faSignIn, faLock } from "@fortawesome/free-solid-svg-icons";
-import AlertFormat from "../../Scripts";
+import AlertFormat from "../../scripts/AlertFormat";
 import { userModelAuth } from "../../models/userModel";
 
 const SignIn = ({styles}) => {

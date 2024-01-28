@@ -32,12 +32,12 @@ export const userModelCheck = async () => {
 
     return {
       "success": false,
-      "msg": "Error",
+      "msg": "Error 1",
     };  
   } catch (error) {
     return {
       "success": false,
-      "msg": "Error",
+      "msg": "Error 2",
     };
   }
 };
@@ -74,7 +74,7 @@ export const userModelAuth = async (username, password) => {
   } catch (error) {
     return {
       "success": false,
-      "msg": "Error",
+      "msg": "Error " + error,
     };
   }
 };

@@ -50,3 +50,24 @@ class UserInfoAPIView(APIView):
             return Response({'success': True, 'user': user_info})
         except AuthenticationFailed:
             return Response({'success': False, 'msg': 'Usuario no autenticado'}, status = 401)
+
+class TestAPIView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        try:
+            data = [
+                {"id": 1, "nombre": "Juan", "edad": 25},
+                {"id": 2, "nombre": "Maria", "edad": 30},
+            ]
+
+            columns = [
+                {"Header": "ID", "accessor": "id"},
+                {"Header": "Nombre", "accessor": "nombre"},
+                {"Header": "Edad", "accessor": "edad"},
+            ]
+
+            return Response({'success': True, 'data': data, 'columns': columns})
+        except AuthenticationFailed:
+            return Response({'success': False, 'msg': 'Usuario no autenticado'}, status = 401)

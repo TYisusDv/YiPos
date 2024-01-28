@@ -1,13 +1,11 @@
 @import 'app.module';
 
-/* CONTENT */
 .content {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
 
-    /* HEADER */
     .header {
         position: fixed;
         display: flex;
@@ -34,7 +32,6 @@
             }
         }
 
-        /* USER */
         .user {
             cursor: pointer;
             height: 100%;
@@ -44,7 +41,6 @@
             box-sizing: border-box;
             width: 12em;
 
-            /* HOVER */
             &:hover {
                 background: $dark;
                 box-shadow: 0px 0px 10px 1px rgba($dark, 0.6);
@@ -84,24 +80,21 @@
                 }
             }
         }
-        /* END USER */
     }
-    /* END HEADER */
 
-    /* MAIN CONTENT */
     .main-content {
         display: flex;
         width: 100%;
         height: 100%;
 
-        /* NAVBAR */
         .navbar {
             position: fixed;
             width: $navbar-width;
             height: 100%;
             background: $dark-1;
             padding-top: $header-height;
-            box-shadow: 0 0 6px rgba($dark, 0.8);
+            transition: transform 400ms ease;
+            //box-shadow: 0 0 6px rgba($dark, 0.8);
             z-index: 1;
 
             ul {
@@ -130,27 +123,23 @@
                     border-radius: 8px;
                     box-sizing: border-box;
 
-                    /* HOVER */
                     &:hover {
                         background: $primary;
                     }
                 }
             }
         }
-        /* END NAVBAR */
 
-        /* MAIN */
         .main {            
             display: flex;
             flex-direction: column;
             width: 100%;
             z-index: 0;
 
-            /* VIEW */
             .view {
                 position: relative;
                 height: 100%;
-                padding: calc($header-height) 0em 0em calc($navbar-width);
+                padding: $header-height 0 0 $navbar-width;
                 background: $bg;
                 overflow-x: hidden;
                 transition: padding-left 400ms ease;
@@ -159,6 +148,8 @@
                 .header {
                     position: fixed;
                     display: flex;
+                    border-bottom-left-radius: 10px;
+                    border-bottom-right-radius: 10px;
                     width: calc(100% - $navbar-width);
                     background: white;
                     padding: 0 1.2em 0 1.2em;
@@ -202,7 +193,6 @@
                 }
             }
 
-            /* FOOTER */
             .footer {
                 display: flex;
                 align-items: center;
@@ -216,10 +206,27 @@
                     color: white;
                     font-weight: bold;
                 }
-                /* END FOOTER */
             }
         }
-        /* END MAIN */
     }
-    /* END MAIN CONTENT */
+}
+
+@media (max-width: 800px) {
+    .content {          
+        .main-content {   
+            .navbar {
+                transform: translateX(calc($navbar-width * -1));
+            }
+
+            .main {            
+                .view {
+                    padding: $header-height 0 0 0;
+
+                    .header {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
 }
