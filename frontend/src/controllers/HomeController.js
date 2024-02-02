@@ -1,16 +1,22 @@
 // controllers/HomeController.js
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faUser, faUsers, faHome, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import Logout from "../components/auth/Logout";
 import Home from "../components/Home";
 import ManageUsers from "../components/manage/Users";
+import Modal from "../scripts/Modal";
 import styles from "../assets/css/home.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUser, faUsers, faHome } from "@fortawesome/free-solid-svg-icons";
 import "animate.css";
 
-const HomeController = () => {
+const HomeController = ({ user, setUser }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showDropbox, setShowDropbox] = useState(false);
   const [dots, setDots] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [titleModal, setTitleModal] = useState(false);
+  const [bodyModal, setBodyModal] = useState(false); 
 
   useEffect(() => {
     const preLoader = () => {
@@ -39,6 +45,18 @@ const HomeController = () => {
       setIsLoading(false);
     }, 1500);     
   }
+  
+  const handleToggleDropbox = () => {
+    setShowDropbox(!showDropbox);
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className={styles.content}>
@@ -46,14 +64,19 @@ const HomeController = () => {
         <div className={styles.logo}>
           <div className={styles.img}></div>          
         </div>
-        <div className={styles.user}>
+        <div className={`${styles.user} ${showDropbox ? styles.show : ''}`} onClick={handleToggleDropbox}>
           <div className={styles.info}>
-            <p className={styles.name}>Yisus Navarro Salcido</p>
+            <p className={styles.name}>{user.first_name} {user.last_name}</p>
             <div className={styles.img}>
               <FontAwesomeIcon icon={faUser}/>
             </div>
           </div>
           <div className={styles.dropbox}>
+            <ul>
+              <li>
+                <Link to="/account/logout" onClick={handlePreLoader}><FontAwesomeIcon icon={faRightFromBracket}/> Cerrar sesión</Link>
+              </li>
+            </ul>
           </div>          
         </div>
       </div>
@@ -93,7 +116,8 @@ const HomeController = () => {
             ) : (
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/manage/users" element={<ManageUsers />} />
+                <Route path="/account/logout" element={<Logout setUser={setUser}/>} />
+                <Route path="/manage/users" element={<ManageUsers openModal={openModal} setTitleModal={setTitleModal} setBodyModal={setBodyModal} />} />
               </Routes>
             )}
           </div>
@@ -101,7 +125,8 @@ const HomeController = () => {
             <p>© 2023 YiPos. Reservados todos los derechos.</p>
           </div>          
         </div>        
-      </div>        
+      </div>  
+      <Modal isOpen={isModalOpen} closeModal={closeModal} title={titleModal} body={bodyModal}></Modal>      
     </div>      
   );
 };

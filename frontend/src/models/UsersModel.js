@@ -22,6 +22,7 @@ export const AuthSignInModel = async (username, password) => {
         return {
           "success": true,
           "msg": responseJson.msg,
+          "user": responseJson.user,
         };
       }    
     }
@@ -33,7 +34,7 @@ export const AuthSignInModel = async (username, password) => {
   } catch (error) {
     return {
       "success": false,
-      "msg": "Error " + error,
+      "msg": "Ocurrió un error.",
     };
   }
 };
@@ -45,7 +46,7 @@ export const UserInfoModel = async () => {
     if (!getTokenModel.success) {
       return {
         "success": false,
-        "msg": "Error to get token",
+        "msg": getTokenModel.msg,
       }; 
     }
 
@@ -74,7 +75,55 @@ export const UserInfoModel = async () => {
   } catch (error) {
     return {
       "success": false,
-      "msg": "Error 2",
+      "msg": "Ocurrió un error.",
+    };
+  }
+};
+
+export const ManageUsersAddModel = async (username, password, firstname, lastname, email) => {
+  try {
+    const getTokenModel = await GetTokenModel();
+
+    if (!getTokenModel.success) {
+      return {
+        "success": false,
+        "msg": getTokenModel.msg,
+      }; 
+    }
+
+    const response = await fetch("http://127.0.0.1:8000/api/manage/users", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${getTokenModel.authToken}`,
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        first_name: firstname,
+        last_name: lastname,
+        email: email
+      }),
+    });
+
+    const responseJson = await response.json();
+
+    if (response.ok && responseJson.success) {  
+      return {
+        "success": true,
+        "msg": responseJson.msg,
+        "user": responseJson.user
+      };      
+    } 
+    
+    return {
+      "success": false,
+      "msg": responseJson.msg,
+    }; 
+  } catch (error) {
+    return {
+      "success": false,
+      "msg": "Ocurrió un error.",
     };
   }
 };

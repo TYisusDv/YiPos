@@ -1,19 +1,30 @@
 // components/manage/Users.js
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUsers, faPlus } from "@fortawesome/free-solid-svg-icons";
-import "animate.css";
-import styles from "../../assets/css/home.module.css";
 import DataTable from "../../scripts/DataTable";
+import ManageUsersAddModal from "../../modals/ManageUsersAddModal";
 
-const ManageUsers = () => {
+import styles from "../../assets/css/home.module.css";
+import "animate.css";
+
+const ManageUsers = ({ openModal, setTitleModal, setBodyModal }) => {
   const columns = [
-    { field: "id", label: "User ID" },
-    { field: "username", label: "User Name" },
-    { field: "email", label: "Email Address" },
+    { field: "id", label: "ID" },
+    { field: "username", label: "Nombre de usuario" },
+    { field: "email", label: "Correo electronico" },
     { field: "last_login", label: "Last Login" },
     { field: "date_joined", label: "Join Date" },
-  ];
+  ];  
+
+  const setModal = (name) => {
+    if(name === "addUser"){
+      setTitleModal("Agregar usuario");
+      setBodyModal(
+        <ManageUsersAddModal />
+      );
+    }    
+  };
 
   return (
     <div>
@@ -28,7 +39,7 @@ const ManageUsers = () => {
             <li className={styles.active}>Users</li>
           </ul>
       </div>
-      <div className={styles["row-main"]}>
+      <div className={styles["row-main"]}>        
         <div className={`${styles["row-wrap"]} ${styles["g-8px"]}`}>
           <div className={styles["col-4"]}>
             <div className={styles["panel-count"]}>
@@ -74,7 +85,12 @@ const ManageUsers = () => {
               <div className={styles.head}>
                 <h3 className={styles.title}>Usuarios</h3>
                 <div>
-                  <button className={`${styles["btn"]} ${styles["bg-primary"]}`}><FontAwesomeIcon icon={faPlus} /> Agregar</button>
+                  <button 
+                    className={`${styles.btn} ${styles["bg-primary"]}`} 
+                    onClick={() => {
+                      openModal();
+                      setModal("addUser");
+                    }}><FontAwesomeIcon icon={faPlus} /> Agregar</button>
                 </div>
               </div>
               <div className={styles.body}>

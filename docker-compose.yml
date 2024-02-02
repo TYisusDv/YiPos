@@ -10,6 +10,9 @@ services:
       - db
     volumes:
       - ./backend:/app
+      - ./backend/venv:/app/venv
+    environment:
+      - PATH="/app/venv/bin:$PATH"
 
   frontend:
     build:

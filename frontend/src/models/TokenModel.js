@@ -5,7 +5,7 @@ export const GetTokenModel = async () => {
         if(!authToken){
             return {
                 "success": false,
-                "authToken": null
+                "authToken": "El token aún no está disponible."
             }
         }
 
@@ -16,7 +16,7 @@ export const GetTokenModel = async () => {
     } catch(error) {
         return {
             "success": false,
-            "authToken": null
+            "authToken": "Ocurrió un error."
         }
     }
 };

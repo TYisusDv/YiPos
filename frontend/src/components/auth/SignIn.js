@@ -1,12 +1,14 @@
 // components/Home.js
 import React, { useState }  from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser, faSignIn, faLock } from "@fortawesome/free-solid-svg-icons";
-import { AuthSignInModel } from "../../models/UserModel";
+import { AuthSignInModel } from "../../models/UsersModel";
 import AlertFormat from "../../scripts/AlertFormat";
 import styles from "../../assets/css/auth.module.css";
 
-const SignIn = () => {
+const SignIn = ({ setUser }) => {
+  const navigate = useNavigate();
   const [alertMessage, setAlertMessage] = useState(null);
   const [btnSubmitSpan, setBtnSubmitSpan] = useState(
     <span>
@@ -34,12 +36,12 @@ const SignIn = () => {
     )
     
     const response = await AuthSignInModel(username, password);
-
     setTimeout(function(){      
       if (response.success) {
         setAlertMessage({ type: "primary", title: "Exito!", message: response.msg });
         setTimeout(function(){
-          window.location = "/";
+          navigate("/");
+          setUser(true);
         }, 2000);     
         return;
       }

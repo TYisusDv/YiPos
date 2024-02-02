@@ -1,8 +1,8 @@
 // scripts/DataTable.js
 import React, { useState, useEffect } from "react";
-import styles from "../assets/css/home.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import styles from "../assets/css/home.module.css";
 
 const DataTable = ({ endpoint, columns }) => {
     const ascendingArrow = "\u2191";
@@ -59,7 +59,7 @@ const DataTable = ({ endpoint, columns }) => {
             buttons.push(
                 <button
                     key={i}
-                    className={`${styles.btn} ${i === currentPage ? styles["bg-primary"] : styles["bg-t-primary"]} ${i === currentPage ? styles.active : ""}`}
+                    className={`${styles.btn} ${styles["btn-pagination"]} ${i === currentPage ? styles["bg-primary"] : styles["bg-t-primary"]} ${i === currentPage ? styles.active : ""}`}
                     onClick={() => handlePageChange(i)}
                 >
                     {i}
@@ -124,9 +124,9 @@ const DataTable = ({ endpoint, columns }) => {
                     <span>Page {currentPage} of {totalPages}</span>
                 </div>
                 <div className={styles.pagination}>
-                    <button className={`${styles.btn} ${styles["bg-primary"]}`} onClick={() => handlePageChange(currentPage - 1)}><FontAwesomeIcon icon={faAngleLeft}/></button>
+                    <button className={`${styles.btn} ${styles["btn-pagination"]} ${styles["bg-t-primary"]}`} onClick={() => handlePageChange(currentPage - 1)}><FontAwesomeIcon icon={faAngleLeft}/></button>
                     {generatePaginationButtons()}
-                    <button className={`${styles.btn} ${styles["bg-primary"]}`} onClick={() => handlePageChange(currentPage + 1)}><FontAwesomeIcon icon={faAngleRight}/></button>
+                    <button className={`${styles.btn} ${styles["btn-pagination"]} ${styles["bg-t-primary"]}`} onClick={() => handlePageChange(currentPage + 1)}><FontAwesomeIcon icon={faAngleRight}/></button>
                 </div>
             </div>
         </div>

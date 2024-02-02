@@ -39,8 +39,8 @@
             margin-right: 0.7em;
             border-radius: 8px;
             box-sizing: border-box;
-            width: 12em;
-
+            width: 13em;
+            
             &:hover {
                 background: $dark;
                 box-shadow: 0px 0px 10px 1px rgba($dark, 0.6);
@@ -52,6 +52,7 @@
 
             .info {
                 display: flex;
+                justify-content: right;
                 align-items: center;
                 gap: 0.5em;
 
@@ -76,6 +77,52 @@
                     svg {
                         color: $primary;
                         font-size: 1em;
+                    }
+                }
+            }
+
+            &.show {
+                background: $dark;
+                box-shadow: 0px 0px 10px 1px rgba($dark, 0.6);
+
+                .info .img svg {
+                    color: $dark;
+                }
+
+                .dropbox {
+                    display: block;
+                }
+            }
+
+            .dropbox {
+                display: none;
+                background: $dark;
+                width: 13em;
+                margin: 1.2em 0 0 -1em;
+                border-radius: 8px;
+                padding: 0.4em;
+                box-shadow: 0px 0px 10px 1px rgba($dark, 0.3);
+                box-sizing: border-box;
+
+                ul {
+                    list-style: none;
+
+                    li {
+                        a {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                            padding: 0.6em;
+                            border-radius: 8px;
+                            color: white;
+                            text-decoration: none;
+                            font-weight: bold;
+                            box-sizing: border-box;
+
+                            &:hover {
+                                background: $primary;
+                            }
+                        }
                     }
                 }
             }
@@ -307,7 +354,6 @@
             tbody {
                 tr {
                     font-size: 0.95em;
-                    font-weight: 600;
                     user-select:text;
 
                     &:nth-child(even) {
