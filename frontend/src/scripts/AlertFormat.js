@@ -1,34 +1,23 @@
 // scripts/AlertFormat.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import styles from "../assets/css/auth.module.css";
+import "animate.css";
 
-const AlertFormat = ({ setAlertMessage, type, title, message, autoHideTime}) => {
+const AlertFormat = ({ setAlert, type, title, message }) => {
   const [isClosing, setIsClosing] = useState(false);
-
-  const handleClose = () => {
+  
+  const handleClose = () => {   
     setIsClosing(true);
-    setTimeout(() => {
-      setAlertMessage(null);
+
+    setTimeout(function(){
+      setAlert(null);
     }, 500);
   };
 
-  useEffect(() => {
-    if (autoHideTime) {
-      const timeoutId = setTimeout(() => {
-        setIsClosing(true);
-        setTimeout(() => {
-          setAlertMessage(null);
-        }, 500);
-      }, autoHideTime);
-
-      return () => clearTimeout(timeoutId);
-    }
-  }, [autoHideTime, setAlertMessage]);
-
   return (
-    <div className={`${styles.alert} ${styles[type]} ${isClosing ? styles.hide : styles.show}`}>
+    <div className={`animate__animated ${styles.alert} ${styles[type]} ${isClosing ? "animate__fadeOut" : "animate__fadeIn"}`}>
       <div className={styles.title}>
         <span>{title}</span> {message}
         <FontAwesomeIcon

@@ -1,11 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, get_user_model
 from django.utils import timezone
 from django.core.paginator import Paginator
@@ -25,25 +26,23 @@ class SignInAPIView(APIView):
         elif not password:
             return Response({'success': False, 'msg': 'Por favor, proporcione una contraseña válida.'}, status = 400)
         
-        user = authenticate(request, username = username, password = password)
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             
-            token, created = Token.objects.get_or_create(user=user)
-            if not created and token.created < timezone.now() - datetime.timedelta(days=1):
-                token.delete()
-                token = Token.objects.create(user = user)          
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
 
             return Response({
                 'success': True, 
                 'msg': 'Redireccionando...',
-                'token': token.key
+                'token': access_token
             })
-        else:
-            return Response({'success': False, 'msg': 'Usuario o contraseña incorrecta.'}, status = 401)
+        
+        return JsonResponse({'success': False, 'msg': 'Usuario o contraseña incorrecta.'}, status = 401)
         
 class UserInfoAPIView(APIView):
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
@@ -56,12 +55,12 @@ class UserInfoAPIView(APIView):
                 'username': user.username,
                 'email': user.email,
             }
-            return Response({'success': True, 'user': userInfo})
+            return JsonResponse({'success': True, 'user': userInfo})
         except AuthenticationFailed:
-            return Response({'success': False, 'msg': 'Usuario no autenticado.'}, status = 401)
+            return JsonResponse({'success': False, 'msg': 'Usuario no autenticado.'}, status = 401)
 
 class ManageUsersAPIView(APIView):
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
@@ -72,10 +71,10 @@ class ManageUsersAPIView(APIView):
         show = request.query_params.get('show', 10)
 
         users = get_user_model().objects.filter(
-            Q(username__icontains = search_query) |
-            Q(first_name__icontains = search_query) |
-            Q(last_name__icontains = search_query) |
-            Q(email__icontains = search_query)
+            Q(username__icontains=search_query) |
+            Q(first_name__icontains=search_query) |
+            Q(last_name__icontains=search_query) |
+            Q(email__icontains=search_query)
         )
 
         if order == 'desc':
@@ -85,9 +84,9 @@ class ManageUsersAPIView(APIView):
         paginator = Paginator(users, show)
         users_page = paginator.page(page_number)
 
-        serialized_users = ManageUsersTableSerializer(users_page, many = True)
+        serialized_users = ManageUsersTableSerializer(users_page, many=True)
         
-        return Response({
+        return JsonResponse({
             'success': True,
             'data': serialized_users.data,
             'total_pages': paginator.num_pages,
@@ -96,10 +95,43 @@ class ManageUsersAPIView(APIView):
     
     def put(self, request):
         data = request.data
+        
+        username = data.get('username')
+        password = data.get('password')
+        first_name = data.get('first_name')
+        last_name = data.get('last_name')
+        email = data.get('email')
 
-        serializer = ManageUsersAddSerializer(data = data)
+        userModel = get_user_model()
+        if userModel.objects.filter(username=username).exists():
+            return Response({
+                'success': False, 
+                'msg': {
+                    'username': ['Este nombre de usuario ya está en uso. Por favor, proporciona un nombre de usuario.']
+                }
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer = ManageUsersAddSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status = status.HTTP_200_OK)
+            newUser = userModel.objects.create_user(username=username, password=password, first_name=first_name, last_name=last_name, email=email)
+            return JsonResponse({
+                'success': True, 
+                'msg': serializer.data
+            }, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({
+                'success': False, 
+                'msg': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+def handler404(request, exception):
+    return JsonResponse({
+        'success': False, 
+        'msg': 'Página no encontrada'
+    }, status=status.HTTP_404_NOT_FOUND)
+
+def handler500(request):
+    return JsonResponse({
+        'success': False, 
+        'msg': 'Error interno del servidor'
+    }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

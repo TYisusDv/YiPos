@@ -1,9 +1,10 @@
 // models/UserModel.js
-import { GetTokenModel } from "./TokenModel";
+import Cookies from 'js-cookie';
+import { GetTokenModel } from './TokenModel';
 
 export const AuthSignInModel = async (username, password) => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/auth/sign-in", {
+    const response = await fetch("http://127.0.0.1:8000/v1/auth/sign-in", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,7 +18,8 @@ export const AuthSignInModel = async (username, password) => {
       if(responseJson.success){
         const expirationDate = new Date();
         expirationDate.setHours(expirationDate.getHours() + 1);
-        document.cookie = `authToken=${responseJson.token}; path=/; expires=${expirationDate.toUTCString()}; SameSite=Strict`;
+
+        Cookies.set('authToken', responseJson.token, { expires: 7 });
   
         return {
           "success": true,
@@ -40,7 +42,7 @@ export const AuthSignInModel = async (username, password) => {
 };
 
 export const UserInfoModel = async () => {
-  try {
+  try {    
     const getTokenModel = await GetTokenModel();
 
     if (!getTokenModel.success) {
@@ -50,11 +52,11 @@ export const UserInfoModel = async () => {
       }; 
     }
 
-    const response = await fetch("http://127.0.0.1:8000/api/user/info", {
+    const response = await fetch("http://127.0.0.1:8000/v1/user/info", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Token ${getTokenModel.authToken}`,
+        "Authorization": `Bearer ${getTokenModel.authToken}`,
       },
     });
 
@@ -91,11 +93,11 @@ export const ManageUsersAddModel = async (username, password, firstname, lastnam
       }; 
     }
 
-    const response = await fetch("http://127.0.0.1:8000/api/manage/users", {
+    const response = await fetch("http://127.0.0.1:8000/v1/manage/users", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Token ${getTokenModel.authToken}`,
+        "Authorization": `Bearer ${getTokenModel.authToken}`,
       },
       body: JSON.stringify({
         username: username,

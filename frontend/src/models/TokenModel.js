@@ -1,6 +1,8 @@
+import Cookies from 'js-cookie';
+
 export const GetTokenModel = async () => {
     try {
-        const authToken = document.cookie.replace(/(?:(?:^|.*;\s*)authToken\s*=\s*([^;]*).*$)|^.*$/, "$1");
+        const authToken = Cookies.get('authToken');
         
         if(!authToken){
             return {

@@ -6,17 +6,17 @@ import { ManageUsersAddModel } from "../models/UsersModel"
 import styles from "../assets/css/home.module.css";
 
 const ManageUsersAddModal = () => {
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [username, setUsername] = useState(null);
-    const [password, setPassword] = useState(null);
-    const [firstname, setFirstname] = useState(null);
-    const [lastname, setLastname] = useState(null);
-    const [email, setEmail] = useState(null);
     const [BtnSubmit, setBtnSubmit] = useState(
         <span>
           <FontAwesomeIcon icon={faPaperPlane} className={styles["mr-2px"]} /> Agregar
         </span>
     );
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [firstname, setFirstname] = useState(null);
+    const [lastname, setLastname] = useState(null);
+    const [email, setEmail] = useState(null);    
 
     const handleAddSubmit = async (e) => {
         e.preventDefault();

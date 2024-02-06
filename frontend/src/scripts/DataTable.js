@@ -1,13 +1,14 @@
 // scripts/DataTable.js
 import React, { useState, useEffect } from "react";
+import { GetTokenModel } from '../models/TokenModel';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import AlertFormat from "./AlertFormat";
 import styles from "../assets/css/home.module.css";
 
 const DataTable = ({ endpoint, columns }) => {
     const ascendingArrow = "\u2191";
     const descendingArrow = "\u2193";
-
     const [data, setData] = useState([]);
     const [search, setSearch] = useState("");
     const [orderBy, setOrderBy] = useState("id");
@@ -15,23 +16,43 @@ const DataTable = ({ endpoint, columns }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [showRows, setShowRows] = useState(10);
+    const [alert, setAlert] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {  
-            const authToken = document.cookie.replace(/(?:(?:^|.*;\s*)authToken\s*=\s*([^;]*).*$)|^.*$/, "$1");
+            const getTokenModel = await GetTokenModel();
+
+            if (!getTokenModel.success) {
+                return {
+                    "success": false,
+                    "msg": getTokenModel.msg,
+                }; 
+            }
             
             const queryString = `?search=${search}&order_by=${orderBy}&order=${order}&page=${currentPage}&show=${showRows}`;
-            const response = await fetch(`http://127.0.0.1:8000/api/${endpoint}${queryString}`, {
+            const response = await fetch(`http://127.0.0.1:8000/v1/${endpoint}${queryString}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Token ${authToken}`,
+                    "Authorization": `Bearer ${getTokenModel.authToken}`,
                 },
             });
 
             const responseJson = await response.json();
-            setData(responseJson.data);
-            setTotalPages(responseJson.total_pages);
+            if(responseJson.success){
+                setData(responseJson.data);
+                setTotalPages(responseJson.total_pages);
+                return;
+            }
+
+            setAlert(
+                <AlertFormat
+                    setAlert={setAlert}
+                    type="danger"
+                    title="Error!"
+                    message={responseJson.msg ? responseJson.msg : "Error al cargar la tabla."}
+                />
+            );
         }
 
         fetchData();
@@ -71,6 +92,7 @@ const DataTable = ({ endpoint, columns }) => {
 
     return (
         <div className={styles["table-responsive"]}>
+            {alert}
             <div className={styles.filters}>
                 <div className={styles.show}>
                     <span>
@@ -112,7 +134,9 @@ const DataTable = ({ endpoint, columns }) => {
                         {data.map(item => (
                             <tr key={item.id}>
                                 {columns.map((column) => (
-                                    <td key={column.field}>{item[column.field]}</td>
+                                    <td key={column.field}>
+                                        {item[column.field] !== null && item[column.field] !== "" ? item[column.field] : "-"}
+                                    </td>
                                 ))}
                             </tr>
                         ))}

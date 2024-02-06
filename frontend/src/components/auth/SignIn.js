@@ -9,15 +9,16 @@ import styles from "../../assets/css/auth.module.css";
 
 const SignIn = ({ setUser }) => {
   const navigate = useNavigate();
-  const [alertMessage, setAlertMessage] = useState(null);
+  const [alert, setAlert] = useState(null);
   const [btnSubmitSpan, setBtnSubmitSpan] = useState(
     <span>
       <FontAwesomeIcon icon={faSignIn} className={styles["mr-2px"]} /> Iniciar sesión
     </span>
   );
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +39,15 @@ const SignIn = ({ setUser }) => {
     const response = await AuthSignInModel(username, password);
     setTimeout(function(){      
       if (response.success) {
-        setAlertMessage({ type: "primary", title: "Exito!", message: response.msg });
+        setAlert(
+          <AlertFormat
+            setAlert={setAlert}
+            type="primary"
+            title="Exito!"
+            message={response.msg}
+          />
+        );
+
         setTimeout(function(){
           navigate("/");
           setUser(true);
@@ -52,7 +61,14 @@ const SignIn = ({ setUser }) => {
           <FontAwesomeIcon icon={faSignIn} className={styles["mr-2px"]} /> Iniciar sesión
         </span>
       )
-      setAlertMessage({ type: "danger", title: "Error!", message: response.msg, autoHideTime: 5000 });   
+      setAlert(
+        <AlertFormat
+          setAlert={setAlert}
+          type="danger"
+          title="Error!"
+          message={response.msg}
+        />
+      );
       return;
     }, 1000);
   };
@@ -72,16 +88,7 @@ const SignIn = ({ setUser }) => {
       <div className={styles["info-2"]}>
         <div className={styles.form}>
           <form onSubmit={handleSubmit}>
-            {alertMessage && (
-              <AlertFormat
-                setAlertMessage={setAlertMessage}
-                type={alertMessage.type}
-                title_strong={alertMessage.title_strong}
-                title={alertMessage.title}
-                message={alertMessage.message}
-                autoHideTime={alertMessage.autoHideTime}                
-              />
-            )}
+            {alert}
             <h1 className={styles["text-primary"]}>Inicio de sesión</h1>
             <p>Usa tu usuario y contraseña para acceder.</p>
             <div className={`${styles["form-input"]} ${styles["mb-6px"]}`}>

@@ -6,7 +6,6 @@ import { faUser, faUsers, faHome, faRightFromBracket } from "@fortawesome/free-s
 import Logout from "../components/auth/Logout";
 import Home from "../components/Home";
 import ManageUsers from "../components/manage/Users";
-import Modal from "../scripts/Modal";
 import styles from "../assets/css/home.module.css";
 import "animate.css";
 
@@ -14,9 +13,7 @@ const HomeController = ({ user, setUser }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showDropbox, setShowDropbox] = useState(false);
   const [dots, setDots] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [titleModal, setTitleModal] = useState(false);
-  const [bodyModal, setBodyModal] = useState(false); 
+  const [modal, setModal] = useState(false); 
 
   useEffect(() => {
     const preLoader = () => {
@@ -48,14 +45,6 @@ const HomeController = ({ user, setUser }) => {
   
   const handleToggleDropbox = () => {
     setShowDropbox(!showDropbox);
-  };
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
   };
 
   return (
@@ -117,7 +106,7 @@ const HomeController = ({ user, setUser }) => {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/account/logout" element={<Logout setUser={setUser}/>} />
-                <Route path="/manage/users" element={<ManageUsers openModal={openModal} setTitleModal={setTitleModal} setBodyModal={setBodyModal} />} />
+                <Route path="/manage/users" element={<ManageUsers setModal={setModal} />} />
               </Routes>
             )}
           </div>
@@ -125,8 +114,8 @@ const HomeController = ({ user, setUser }) => {
             <p>© 2023 YiPos. Reservados todos los derechos.</p>
           </div>          
         </div>        
-      </div>  
-      <Modal isOpen={isModalOpen} closeModal={closeModal} title={titleModal} body={bodyModal}></Modal>      
+      </div>
+      {modal}            
     </div>      
   );
 };

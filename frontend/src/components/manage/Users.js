@@ -1,14 +1,14 @@
 // components/manage/Users.js
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUsers, faPlus } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "../../scripts/DataTable";
+import Modal from "../../scripts/Modal";
 import ManageUsersAddModal from "../../modals/ManageUsersAddModal";
-
 import styles from "../../assets/css/home.module.css";
 import "animate.css";
 
-const ManageUsers = ({ openModal, setTitleModal, setBodyModal }) => {
+const ManageUsers = ({ setModal }) => {
   const columns = [
     { field: "id", label: "ID" },
     { field: "username", label: "Nombre de usuario" },
@@ -16,15 +16,6 @@ const ManageUsers = ({ openModal, setTitleModal, setBodyModal }) => {
     { field: "last_login", label: "Last Login" },
     { field: "date_joined", label: "Join Date" },
   ];  
-
-  const setModal = (name) => {
-    if(name === "addUser"){
-      setTitleModal("Agregar usuario");
-      setBodyModal(
-        <ManageUsersAddModal />
-      );
-    }    
-  };
 
   return (
     <div>
@@ -88,9 +79,11 @@ const ManageUsers = ({ openModal, setTitleModal, setBodyModal }) => {
                   <button 
                     className={`${styles.btn} ${styles["bg-primary"]}`} 
                     onClick={() => {
-                      openModal();
-                      setModal("addUser");
-                    }}><FontAwesomeIcon icon={faPlus} /> Agregar</button>
+                      setModal(
+                        <Modal setModal={setModal} title="Agregar usuarios" body={<ManageUsersAddModal />}></Modal>        
+                      );
+                    }}
+                  ><FontAwesomeIcon icon={faPlus} /> Agregar</button>
                 </div>
               </div>
               <div className={styles.body}>
