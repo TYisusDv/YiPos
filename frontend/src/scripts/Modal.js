@@ -7,16 +7,15 @@ import styles from "../assets/css/home.module.css";
 import "animate.css";
 
 const Modal = ({ setModal, title, body }) => {
-  //const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 0, y: -100 });
   const [isClosing, setIsClosing] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   
-  /*
+  
   const handleDrag = (e, ui) => {
     const { x, y } = ui;
     setPosition({ x, y });
   };
-  */
 
   const handleClose = () => {   
     setIsClosing(true);
@@ -31,10 +30,9 @@ const Modal = ({ setModal, title, body }) => {
     <div className={`animate__animated animate__faster animate__fadeIn ${isClosing ? "animate__fadeOut" : "animate__fadeIn"} ${isOpen ? styles["modal-show"] : styles["modal-hide"]} ${styles["modal"]}`}>
       <Draggable 
         handle="#modal-header"
-        bounds="parent"
-        position={{ x: 0, y: -100 }}
-        //position={position}
-        //onDrag={handleDrag}
+        bounds="parent"        
+        position={position}
+        onDrag={handleDrag}
       >          
         <div className={`${styles["modal-content"]}`}>
           <div id="modal-header" className={styles["modal-header"]}>
