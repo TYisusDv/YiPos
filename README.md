@@ -16,17 +16,17 @@ This software is being developed to learn and practice React.
 <table>
   <tr>
     <td>
-      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 1" width="100%">
+      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 1" width="33.3%">
     </td>
   </tr>
   <tr>
     <td>
-      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 2" width="100%">
+      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 2" width="33.3%">
     </td>
   </tr>
   <tr>
     <td>
-      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 3" width="100%">
+      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 3" width="33.3%">
     </td>
   </tr>
 </table>
