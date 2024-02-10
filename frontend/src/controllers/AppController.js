@@ -14,7 +14,6 @@ const AppController = () => {
     const fetchData = async () => {
       if(user === true || user === null ){
         const response = await UserInfoModel();
-        console.log(response);
         if (response.success) {
           setUser(response.user);
         } else {

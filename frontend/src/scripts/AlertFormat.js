@@ -19,7 +19,7 @@ const AlertFormat = ({ setAlert, type, title, message }) => {
   return (
     <div className={`animate__animated ${styles.alert} ${styles[type]} ${isClosing ? "animate__fadeOut" : "animate__fadeIn"}`}>
       <div className={styles.title}>
-        <span>{title}</span> {message}
+        <div><span>{title}</span> {message}</div>        
         <FontAwesomeIcon
           className={styles["btn-close"]}
           icon={faTimes}

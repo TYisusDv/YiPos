@@ -1,13 +1,32 @@
 # YiPos
-Punto de venta multifuncional y inventario a tiempo real.
+Multifunctional point of sale and real-time inventory.
 
-## Descripción
-Este software se está desarrollando para aprender y practicar React.
+## Description
+This software is being developed to learn and practice React.
 
-## Información
+## Technologies
 - Django (API Rest)
 - React
 - JW Token
 - Socket IO
 - MySQL
 - Docker
+
+## Development process
+<table>
+  <tr>
+    <td>
+      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 1" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 2" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 3" width="100%">
+    </td>
+  </tr>
+</table>

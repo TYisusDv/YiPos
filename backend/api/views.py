@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, get_user_model
 from django.utils import timezone
 from django.core.paginator import Paginator
+from django.core.validators import validate_email
 from django.db.models import Q
 from .serializers import *
 import datetime
@@ -69,6 +70,9 @@ class ManageUsersAPIView(APIView):
         order_by = request.query_params.get('order_by', 'id')
         order = request.query_params.get('order', 'asc')
         show = request.query_params.get('show', 10)
+        
+        if order_by == 'actions':
+            order_by = 'id'
 
         users = get_user_model().objects.filter(
             Q(username__icontains=search_query) |
@@ -85,7 +89,7 @@ class ManageUsersAPIView(APIView):
         users_page = paginator.page(page_number)
 
         serialized_users = ManageUsersTableSerializer(users_page, many=True)
-        
+
         return JsonResponse({
             'success': True,
             'data': serialized_users.data,
@@ -110,13 +114,23 @@ class ManageUsersAPIView(APIView):
                     'username': ['Este nombre de usuario ya está en uso. Por favor, proporciona un nombre de usuario.']
                 }
             }, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            validate_email(email)
+        except:
+            return Response({
+                'success': False, 
+                'msg': {
+                    'email': ['El correo electrónico es incorrecto. Por favor, proporcione un correo electrónico valido.']
+                }
+            }, status=status.HTTP_400_BAD_REQUEST)
         
         serializer = ManageUsersAddSerializer(data=data)
         if serializer.is_valid():
             newUser = userModel.objects.create_user(username=username, password=password, first_name=first_name, last_name=last_name, email=email)
             return JsonResponse({
                 'success': True, 
-                'msg': serializer.data
+                'msg': 'Se registró correctamente.'
             }, status=status.HTTP_200_OK)
         else:
             return JsonResponse({

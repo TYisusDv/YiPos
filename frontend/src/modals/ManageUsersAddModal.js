@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser, faLock, faAlignJustify, faEnvelope, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { ManageUsersAddModel } from "../models/UsersModel"
+import AlertFormat from "../scripts/AlertFormat";
 import styles from "../assets/css/home.module.css";
 
-const ManageUsersAddModal = () => {
-    const [BtnSubmit, setBtnSubmit] = useState(
+const ManageUsersAddModal = ({ setModal, setTableKey }) => {
+    const [alert, setAlert] = useState(null);
+    const [btnSubmit, setBtnSubmit] = useState(
         <span>
           <FontAwesomeIcon icon={faPaperPlane} className={styles["mr-2px"]} /> Agregar
         </span>
@@ -19,42 +21,78 @@ const ManageUsersAddModal = () => {
     const [email, setEmail] = useState(null);    
 
     const handleAddSubmit = async (e) => {
-        e.preventDefault();
+        try{
+            e.preventDefault();
         
-        if (isSubmitting) {
-            return;
-        }
-      
-        setIsSubmitting(true);
-        setBtnSubmit(
-            <span>
-              <div className={styles["preloader-circle"]}>
-                <span className={styles["loader-circle"]}></span>
-              </div>
-            </span>
-        );
-
-        const response = await ManageUsersAddModel(username, password, firstname, lastname, email);
-        setTimeout(function(){
-            setIsSubmitting(false);
+            if (isSubmitting) {
+                return;
+            }
+        
+            setIsSubmitting(true);
             setBtnSubmit(
                 <span>
-                    <FontAwesomeIcon icon={faPaperPlane} className={styles["mr-2px"]} /> Agregar
+                <div className={styles["preloader-circle"]}>
+                    <span className={styles["loader-circle"]}></span>
+                </div>
                 </span>
             );
 
-            console.log(response);
-            if (response.success) {
+            const response = await ManageUsersAddModel(username, password, firstname, lastname, email);
+            setTimeout(function(){          
+                if (response.success) {
+                    setAlert(
+                        <AlertFormat
+                        setAlert={setAlert}
+                        type="primary"
+                        title="Exito!"
+                        message={response.msg ? response.msg : ""}
+                        />
+                    );
+                    setTableKey(prevKey => prevKey + 1);
+                    setTimeout(function(){
+                        setModal(null);
+                    }, 1000);
+                    return;
+                }    
+
+                setIsSubmitting(false);
+                setBtnSubmit(
+                    <span>
+                        <FontAwesomeIcon icon={faPaperPlane} className={styles["mr-2px"]} /> Agregar
+                    </span>
+                );
+
+                for (const field in response.msg) {
+                    const errorMessage = response.msg[field]; 
+                    if (errorMessage) {
+                        setAlert(
+                            <AlertFormat
+                                setAlert={setAlert}
+                                type="danger"
+                                title="Error!"
+                                message={errorMessage ? errorMessage : "Ocurrió un error."}
+                            />
+                        );
+                    }
+                }
                 
                 return;
-            }    
-            
-            return;
-        }, 1000);
+            }, 1000);   
+        } catch(e){
+            setAlert(
+                <AlertFormat
+                    setAlert={setAlert}
+                    type="danger"
+                    title="Error!"
+                    message="Ocurrió un error."
+                />
+            );            
+        }        
     };
 
     return (
-        <form onSubmit={handleAddSubmit}>
+        <form onSubmit={handleAddSubmit} noValidate>
+            {alert}
             <h3 className={`${styles["d-flex"]} ${styles["g-8px"]} ${styles["text-primary"]} ${styles["mb-2px"]}`}><FontAwesomeIcon icon={faLock} /> Acceso</h3>
             <div className={`${styles["form-input"]} ${styles["mb-2px"]}`}>
                 <FontAwesomeIcon icon={faUser}/>
@@ -102,7 +140,7 @@ const ManageUsersAddModal = () => {
                     onChange={(e) => setEmail(e.target.value)}          
                 />
             </div>
-            <button type="submit" className={`${styles.btn} ${styles["bg-primary"]} ${styles["float-end"]} ${styles["mb-6px"]}`} disabled={isSubmitting}>{BtnSubmit}</button>
+            <button type="submit" className={`${styles.btn} ${styles["bg-primary"]} ${styles["float-end"]} ${styles["mb-6px"]}`} disabled={isSubmitting}>{btnSubmit}</button>
         </form>
     );
 };

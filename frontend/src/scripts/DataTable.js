@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { GetTokenModel } from '../models/TokenModel';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faAngleLeft, faAngleRight, faCircleCheck, faCircleXmark, faFingerprint, faEdit } from "@fortawesome/free-solid-svg-icons";
 import AlertFormat from "./AlertFormat";
 import styles from "../assets/css/home.module.css";
 
@@ -17,6 +17,16 @@ const DataTable = ({ endpoint, columns }) => {
     const [totalPages, setTotalPages] = useState(1);
     const [showRows, setShowRows] = useState(10);
     const [alert, setAlert] = useState(null);
+
+    function formatTime(item) {
+        let formatted = null;
+        if(item){
+            let datetime = new Date(item);
+            let options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            formatted = datetime.toLocaleString('es-GT', options);
+        }        
+        return formatted;
+    }
 
     useEffect(() => {
         const fetchData = async () => {  
@@ -40,7 +50,26 @@ const DataTable = ({ endpoint, columns }) => {
 
             const responseJson = await response.json();
             if(responseJson.success){
-                setData(responseJson.data);
+                const response_data = responseJson.data
+                const updatedData = response_data.map(element => {
+                    if (endpoint === 'manage/users') {
+                        const f_last_login = formatTime(element.last_login);
+                        const f_date_joined = formatTime(element.date_joined);
+                        const f_is_active = element.is_active ? <span className={`${styles.badge} ${styles["bg-primary"]}`}><FontAwesomeIcon icon={faCircleCheck} /> Si</span> : <span className={`${styles.badge} ${styles["bg-danger"]}`}><FontAwesomeIcon icon={faCircleXmark} /> No</span>;
+
+                        return { 
+                            ...element, 
+                            id: <span className={`${styles.badge} ${styles["bg-primary"]}`}><FontAwesomeIcon icon={faFingerprint} /> {element.id}</span>, 
+                            last_login: f_last_login,
+                            date_joined: <span className={`${styles.badge} ${styles["bg-primary"]}`}>{f_date_joined}</span>,
+                            is_active: f_is_active,
+                            actions: <button className={`${styles.btn} ${styles["btn-sm"]} ${styles["bg-primary"]}`}><FontAwesomeIcon icon={faEdit} /> Editar</button>
+                        };
+                    }
+                    return element;
+                });
+
+                setData(updatedData);
                 setTotalPages(responseJson.total_pages);
                 return;
             }
@@ -131,11 +160,11 @@ const DataTable = ({ endpoint, columns }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map(item => (
-                            <tr key={item.id}>
+                        {data.map((item, index) => (
+                            <tr key={index}>
                                 {columns.map((column) => (
-                                    <td key={column.field}>
-                                        {item[column.field] !== null && item[column.field] !== "" ? item[column.field] : "-"}
+                                    <td key={`${column.field}_${index}`}>
+                                        {column.field === 'id' ? item.id : (item[column.field] !== null && item[column.field] !== "" ? item[column.field] : "-")}
                                     </td>
                                 ))}
                             </tr>

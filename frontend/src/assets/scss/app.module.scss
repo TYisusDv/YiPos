@@ -246,6 +246,14 @@ body {
     }
 }
 
+.badge {
+    padding: 2px 12px 2px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
 .bg {
     &-primary {
         color: white;
@@ -258,6 +266,12 @@ body {
                 background: $primary-disabled;
             }
         }
+    }
+
+    &-danger {
+        color: white;
+        background: $danger;
+        
     }
 
     &-primary-hover {
@@ -304,16 +318,28 @@ body {
     } 
 
     .title {
-        font-size: 1.2em;
-
-        span{
-            font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 1.1em;
+        
+        div {
+            text-align: justify;
+            width: 100%;
+            
+            span{
+                font-weight: bold;
+            }
         }
 
         .btn-close {
             float: right;
             cursor: pointer;
             color: #ffffff;
+
+            &:hover {
+                transform: scale(1.2);
+            }
         }
     }
 
@@ -378,6 +404,8 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 3;
+    padding: 10px;
+    box-sizing: border-box;
     
     &.modal-show {
         display: flex;
@@ -399,7 +427,7 @@ body {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8em;
+            padding: 15px 20px 15px 20px;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
             color: white;
@@ -419,7 +447,7 @@ body {
         }
 
         .modal-body{
-            padding: 0.8em;
+            padding: 15px 20px 15px 20px;
         }
     }    
 }

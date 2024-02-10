@@ -354,20 +354,26 @@
             tbody {
                 tr {
                     font-size: 0.95em;
-                    user-select:text;
-
+                    user-select:text;                   
+                    
                     &:nth-child(even) {
                         color: $primary;
+                        background: rgba($primary, 0.1);
                     }
             
                     &:nth-child(odd) {
                         color: black;                    
                     }
 
-                    td {
+                    &:hover{
+                        background: rgba($primary, 0.2);
+                    }
+
+                    td {                   
+                        min-width: 80px;  
                         padding: 10px 15px 10px 15px;
                         border: none;
-                        user-select:text;
+                        user-select: text;                        
                     }       
                 }  
             }
