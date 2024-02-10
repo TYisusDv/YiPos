@@ -21,8 +21,5 @@ This software is being developed to learn and practice React.
     <td>
       <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 2" width="100%">
     </td>
-    <td>
-      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 3" width="100%">
-    </td>
   </tr>
 </table>
