@@ -17,11 +17,11 @@ This software is being developed to learn and practice React.
   <tr>
     <td>
       <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 1" width="100%">
-      <h2>Crud</h2>
+      <p>Crud</p>
     </td>
     <td>
       <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 2" width="100%">
-      <h2>Crud + Modal</h2>
+      <p>Crud + Modal</p>
     </td>
   </tr>
 </table>
