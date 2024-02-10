@@ -7,7 +7,7 @@ This software is being developed to learn and practice React.
 ## Technologies
 - Django (API Rest)
 - React
-- JW Token
+- JWT Token
 - Socket IO
 - MySQL
 - Docker
