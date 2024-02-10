@@ -13,15 +13,31 @@ This software is being developed to learn and practice React.
 - Docker
 
 ## Development process
-<table>
-  <tr>
-    <td>
-      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 1" width="100%">
-      <p>Crud</p>
-    </td>
-    <td>
-      <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 2" width="100%">
-      <p>Crud + Modal</p>
-    </td>
-  </tr>
-</table>
+<style>
+  .screenshot-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .screenshot-container img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .screenshot-container p {
+    text-align: center;
+  }
+</style>
+
+<div class="screenshot-container">
+  <div>
+    <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 1">
+    <p>Crud</p>
+  </div>
+  <div>
+    <img src="https://raw.githubusercontent.com/TYisusDv/YiPos/master/images/p1.png" alt="Screenshot 2">
+    <p>Crud + Modal</p>
+  </div>
+</div>
