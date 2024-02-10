@@ -8,6 +8,7 @@ This software is being developed to learn and practice React.
 - Django (API Rest)
 - React
 - JWT Token
+- Scss (Sass)
 - Socket IO
 - MySQL
 - Docker
